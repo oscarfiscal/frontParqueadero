@@ -16,30 +16,35 @@
             <!-- Login Form -->
             <form>
               <v-text-field
+                v-model="vehiculo.nombre"
                 class="fadeIn first"
                 label="Nombre propietario"
                 prepend-icon="mdi-account"
                 type="text"
               ></v-text-field>
               <v-text-field
+                v-model="vehiculo.cedula"
                 class="fadeIn second"
                 label="Cedula"
                 prepend-icon="mdi-mail"
                 type="number"
               ></v-text-field>
               <v-text-field
+                v-model="vehiculo.placa"
                 class="fadeIn third"
                 label="Placa"
                 prepend-icon="mdi-ballot"
                 type="number"
               ></v-text-field>
               <v-text-field
+                v-model="vehiculo.marca"
                 class="fadeIn fourth"
                 label="Marca"
                 prepend-icon="mdi-tag-multiple"
                 type="Text"
               ></v-text-field>
               <v-text-field
+                v-model="vehiculo.tipo_vehiculo"
                 class="fadeIn fourth"
                 label="Tipo de vehiculo"
                 prepend-icon="mdi-car"
@@ -51,10 +56,11 @@
                 class="boton btn-lg btn-block border-0 text-center text-white inline-block w-100 p-3 mb-3"
                 style="background-color: #fcbf00"
                 :loading="loading"
-                @click="loader = 'loading'"
+                @click="enviarVehiculo"
               >
                 Crear vehiculo
               </v-btn>
+              {{ vehiculo }}
             </form>
           </div>
         </div>
@@ -68,24 +74,41 @@ export default {
   name: "Formulario",
   data() {
     return {
+      vehiculo: {
+        nombre: "",
+        cedula: "",
+        placa: "",
+        marca: "",
+        tipo_vehiculo: "",
+      },
       loader: null,
       loading: false,
     };
   },
-  watch: {
-    loader() {
-      const l = this.loader;
-      this[l] = !this[l];
-
-      setTimeout(() => (this[l] = false), 500);
-
-      this.loader = null;
+  methods: {
+    enviarVehiculo() {
+      const formData = new FormData();
+      formData.append("nombre", this.vehiculo.nombre);
+      formData.append("cedula", this.vehiculo.cedula);
+      formData.append("placa", this.vehiculo.placa);
+      formData.append("marca", this.vehiculo.marca);
+      formData.append("tipo_vehiculo", this.vehiculo.tipo_vehiculo);
+      this.loading = true;
+      fetch( "https://guarded-harbor-37792.herokuapp.com/api/register",{
+        method: "POST",
+        body: formData,
+      })
+      .then((data)=>{
+        console.log(data)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
     },
   },
 };
 </script>
 <style>
-
 /* STRUCTURE */
 
 .wrapper {
@@ -234,8 +257,6 @@ export default {
 .underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 #icon {
   width: 30%;
