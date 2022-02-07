@@ -60,8 +60,28 @@
               >
                 Crear vehiculo
               </v-btn>
-              {{ vehiculo }}
             </form>
+
+            <v-snackbar
+              v-model="snackbar"
+              :multi-line="multiLine"
+              color="green"
+            >
+              {{ textSnackbar }}
+            </v-snackbar>
+            <v-snackbar v-model="error" :multi-line="multiLine" color="red">
+              {{ textError }}
+              <template v-slot:action="{ attrs }">
+                <v-btn
+                  color="white"
+                  text
+                  v-bind="attrs"
+                  @click="error = false"
+                >
+                  Close
+                </v-btn>
+              </template>
+            </v-snackbar>
           </div>
         </div>
       </v-col>
@@ -74,6 +94,10 @@ export default {
   name: "Formulario",
   data() {
     return {
+      snackbar: false,
+      error: false,
+      textError: "No se pudo crear el vehiculo",
+      textSnackbar: "Datos guardados",
       vehiculo: {
         nombre: "",
         cedula: "",
@@ -94,16 +118,23 @@ export default {
       formData.append("marca", this.vehiculo.marca);
       formData.append("tipo_vehiculo", this.vehiculo.tipo_vehiculo);
       this.loading = true;
-      fetch( "https://guarded-harbor-37792.herokuapp.com/api/register",{
+      fetch("https://guarded-harbor-37792.herokuapp.com/api/register", {
         method: "POST",
         body: formData,
       })
-      .then((data)=>{
-        console.log(data)
-      })
-      .catch((error)=>{
-        console.log(error)
-      })
+        .then((data) => {
+          this.loading = false;
+          data == this.textSnackbar;
+          this.snackbar = true;
+          setTimeout(() => {
+            location.reload();
+          });
+        })
+        .catch((error) => {
+          error == this.textError;
+          this.error = true;
+          this.loading = false;
+        });
     },
   },
 };
