@@ -1,13 +1,22 @@
+/** @format */
+
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
-import Vuetify from 'vuetify'
+import Vuetify from "vuetify";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
-import 'vuetify/dist/vuetify.min.css'
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
+import "vuetify/dist/vuetify.min.css";
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue);
 
-Vue.use(Vuetify)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin);
+Vue.use(Vuetify);
 Vue.config.productionTip = false;
 
 new Vue({
