@@ -76,19 +76,18 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-            var recorrer = data.data;
-            recorrer.forEach(element => {
-                var recuperar={
-                    nombre: element.data.attributes.nombre,
-                    cedula: element.data.attributes.cedula,
-                    placa: element.data.attributes.placa,
-                    marca: element.data.attributes.marca,
-                    tipo_vehiculo: element.data.attributes.tipo_vehiculo,
-                }
-                this.desserts.push(recuperar);
-              
-            });
-          
+          var recorrer = data.data;
+          recorrer.forEach((element) => {
+            var recuperar = {
+              nombre: element.data.attributes.nombre,
+              cedula: element.data.attributes.cedula,
+              placa: element.data.attributes.placa,
+              marca: element.data.attributes.marca,
+              tipo_vehiculo: element.data.attributes.tipo_vehiculo,
+            };
+            this.desserts.push(recuperar);
+          });
+
           console.log(data);
         });
     },
