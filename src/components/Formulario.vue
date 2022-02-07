@@ -34,7 +34,7 @@
                 class="fadeIn third"
                 label="Placa"
                 prepend-icon="mdi-ballot"
-                type="number"
+                type="text"
               ></v-text-field>
               <v-text-field
                 v-model="vehiculo.marca"

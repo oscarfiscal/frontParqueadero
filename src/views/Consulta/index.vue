@@ -36,10 +36,7 @@
 <script>
 export default {
   data: () => ({
-    dialog: false,
-    snackbar: false,
     textSnackbar: "",
-    dialogDelete: false,
     search: "",
     filter: {},
 
@@ -57,12 +54,7 @@ export default {
       { text: "Tipo de vehiculo", value: "tipo_vehiculo", sortable: false },
     ],
     desserts: [],
-    editedIndex: -1,
-    
-  
   }),
-
-  
 
   watch: {
     dialog(val) {
@@ -79,26 +71,27 @@ export default {
 
   methods: {
     initialize() {
-      this.desserts = [
-        {
-         nombre: "Juan",
-            cedula: "123456789",
-            placa: "ABC123",
-            marca: "Toyota",
-            tipo_vehiculo: "Camioneta",
-        },
-      { 
-          nombre: "Pedro",
-            cedula: "123456789",
-            placa: "ABC123a",
-            marca: "Toyota",
-            tipo_vehiculo: "Camioneta",
-      }
-      
-       
-      ];
+      fetch("https://guarded-harbor-37792.herokuapp.com/api/vehicle", {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            var recorrer = data.data;
+            recorrer.forEach(element => {
+                var recuperar={
+                    nombre: element.data.attributes.nombre,
+                    cedula: element.data.attributes.cedula,
+                    placa: element.data.attributes.placa,
+                    marca: element.data.attributes.marca,
+                    tipo_vehiculo: element.data.attributes.tipo_vehiculo,
+                }
+                this.desserts.push(recuperar);
+              
+            });
+          
+          console.log(data);
+        });
     },
-
-    },
+  },
 };
 </script>
