@@ -14,14 +14,14 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item @click="crear">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Registrar vehiculo</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="buscar">
             <v-list-item-icon>
               <v-icon>mdi-car</v-icon>
             </v-list-item-icon>
@@ -45,5 +45,13 @@ export default {
     drawer: false,
     group: null,
   }),
+  methods: {
+    crear() {
+      this.$router.push("/");
+    },
+    buscar() {
+      this.$router.push("/Buscar");
+    },
+  },
 };
 </script>
