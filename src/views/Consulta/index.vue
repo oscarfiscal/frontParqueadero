@@ -29,6 +29,8 @@
             </v-col>
           </template>
         </v-data-table>
+        <h1>resultado de prueba de logica</h1>
+        <h2>{{ array }}</h2>
       </v-col>
     </v-row>
   </v-container>
@@ -67,7 +69,35 @@ export default {
 
   created() {
     this.initialize();
+
+    // parte numero  2 (un poco de logica)
+    let arr = [
+      ["2018-12-01", "AM", "ID123", 5000],
+      ["2018-12-01", "AM", "ID545", 7000],
+      ["2018-12-01", "PM", "ID545", 3000],
+      ["2018-12-02", "AM", "ID123", 7000],
+    ];
+  //funcion para ordenar el array
+    function obj(arr) {
+      let obj = {};
+      arr.forEach((element) => {
+        if (obj[element[0]] == undefined) {
+          let objaux = {};
+          objaux[element[1]] = element[3];
+          obj[element[0]] = objaux;
+        } else {
+          if (obj[element[0]][element[1]] == undefined) {
+            obj[element[0]][element[1]] = element[3];
+          } else {
+            obj[element[0]][element[1]] += element[3];
+          }
+        }
+      });
+      return obj;
+    }
+    this.array = obj(arr);
   },
+  computed: {},
 
   methods: {
     initialize() {
